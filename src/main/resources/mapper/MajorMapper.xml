@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lixiangyan.dao.MajorMapper" >
+  <resultMap id="BaseResultMap" type="com.lixiangyan.entity.Major" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_date" property="mDate" jdbcType="TIMESTAMP" />
+    <result column="m_dept_id" property="mDeptId" jdbcType="INTEGER" />
+    <result column="m_state" property="mState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, m_name, m_date, m_dept_id, m_state
+  </sql>
+
+  <!--专业动态查询-->
+  <select id="selectMajorDynamic" parameterType="com.lixiangyan.entity.Major" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from class
+    where 1 = 1
+    <if test="id != null || id != ''" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="mName != null || mName != ''" >
+      and m_name like "%"#{mName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="m_date != null || mDate != ''" >
+      and d_date like "%"#{mDate,jdbcType=TIMESTAMP}"%"
+    </if>
+    <if test="mDeptId != null || mDeptId != ''" >
+      and m_dept_id = #{mDeptId,jdbcType=INTEGER}
+    </if>
+    <if test="mState != null || mState != ''" >
+      and m_state = #{mState,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from major
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from major
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lixiangyan.entity.Major" >
+    insert into major (id, m_name, m_date,
+      m_dept_id, m_state)
+    values (#{id,jdbcType=INTEGER}, #{mName,jdbcType=VARCHAR}, #{mDate,jdbcType=TIMESTAMP},
+      #{mDeptId,jdbcType=INTEGER}, #{mState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lixiangyan.entity.Major" >
+    insert into major
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mName != null" >
+        m_name,
+      </if>
+      <if test="mDate != null" >
+        m_date,
+      </if>
+      <if test="mDeptId != null" >
+        m_dept_id,
+      </if>
+      <if test="mState != null" >
+        m_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mName != null" >
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        #{mDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mDeptId != null" >
+        #{mDeptId,jdbcType=INTEGER},
+      </if>
+      <if test="mState != null" >
+        #{mState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lixiangyan.entity.Major" >
+    update major
+    <set >
+      <if test="mName != null" >
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        m_date = #{mDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mDeptId != null" >
+        m_dept_id = #{mDeptId,jdbcType=INTEGER},
+      </if>
+      <if test="mState != null" >
+        m_state = #{mState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lixiangyan.entity.Major" >
+    update major
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_date = #{mDate,jdbcType=TIMESTAMP},
+      m_dept_id = #{mDeptId,jdbcType=INTEGER},
+      m_state = #{mState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

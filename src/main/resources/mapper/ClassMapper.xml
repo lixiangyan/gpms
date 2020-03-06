@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lixiangyan.dao.ClassMapper" >
+  <resultMap id="BaseResultMap" type="com.lixiangyan.entity.Class" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_date" property="cDate" jdbcType="TIMESTAMP" />
+    <result column="c_major_id" property="cMajorId" jdbcType="INTEGER" />
+    <result column="c_state" property="cState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, c_name, c_date, c_major_id, c_state
+  </sql>
+
+  <!--班级动态查询-->
+  <select id="selectClassDynamic" parameterType="com.lixiangyan.entity.Class" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from class
+    where 1 = 1
+    <if test="id != null || id != ''" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="cName != null || cName != ''" >
+      and c_name like "%"#{cName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="cDate != null || cDate != ''" >
+      and c_date like "%"#{cDate,jdbcType=TIMESTAMP}"%"
+    </if>
+    <if test="cMajorId != null || cMajorId != ''" >
+      and c_major_id = #{cMajorId,jdbcType=INTEGER}
+    </if>
+    <if test="cState != null || cState != ''" >
+      and c_state like "%"#{cState,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from class
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lixiangyan.entity.Class" >
+    insert into class (id, c_name, c_date,
+      c_major_id, c_state)
+    values (#{id,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cDate,jdbcType=TIMESTAMP},
+      #{cMajorId,jdbcType=INTEGER}, #{cState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lixiangyan.entity.Class" >
+    insert into class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cDate != null" >
+        c_date,
+      </if>
+      <if test="cMajorId != null" >
+        c_major_id,
+      </if>
+      <if test="cState != null" >
+        c_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cDate != null" >
+        #{cDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cMajorId != null" >
+        #{cMajorId,jdbcType=INTEGER},
+      </if>
+      <if test="cState != null" >
+        #{cState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lixiangyan.entity.Class" >
+    update class
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cDate != null" >
+        c_date = #{cDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cMajorId != null" >
+        c_major_id = #{cMajorId,jdbcType=INTEGER},
+      </if>
+      <if test="cState != null" >
+        c_state = #{cState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lixiangyan.entity.Class" >
+    update class
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_date = #{cDate,jdbcType=TIMESTAMP},
+      c_major_id = #{cMajorId,jdbcType=INTEGER},
+      c_state = #{cState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

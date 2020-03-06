@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lixiangyan.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.lixiangyan.entity.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="d_name" property="dName" jdbcType="VARCHAR" />
+    <result column="d_date" property="dDate" jdbcType="TIMESTAMP" />
+    <result column="d_state" property="dState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, d_name, d_date, d_state
+  </sql>
+
+  <!--院系动态查询-->
+  <select id="selectDepartmentDynamic" parameterType="com.lixiangyan.entity.Department" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from class
+    where 1 = 1
+    <if test="id != null || id != ''" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="dName != null || dName != ''" >
+      and d_name like "%"#{dName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="dDate != null || dDate != ''" >
+      and d_date like "%"#{dDate,jdbcType=TIMESTAMP}"%"
+    </if>
+    <if test="dState != null || dState != ''" >
+      and d_state = #{dState,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from department
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lixiangyan.entity.Department" >
+    insert into department (id, d_name, d_date,
+      d_state)
+    values (#{id,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, #{dDate,jdbcType=TIMESTAMP},
+      #{dState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lixiangyan.entity.Department" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dName != null" >
+        d_name,
+      </if>
+      <if test="dDate != null" >
+        d_date,
+      </if>
+      <if test="dState != null" >
+        d_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        #{dDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dState != null" >
+        #{dState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lixiangyan.entity.Department" >
+    update department
+    <set >
+      <if test="dName != null" >
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        d_date = #{dDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dState != null" >
+        d_state = #{dState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lixiangyan.entity.Department" >
+    update department
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_date = #{dDate,jdbcType=TIMESTAMP},
+      d_state = #{dState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

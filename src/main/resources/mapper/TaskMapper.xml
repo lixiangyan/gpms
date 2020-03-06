@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lixiangyan.dao.TaskMapper" >
+  <resultMap id="BaseResultMap" type="com.lixiangyan.entity.Task" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ta_to_id" property="taToId" jdbcType="INTEGER" />
+    <result column="ta_stu_id" property="taStuId" jdbcType="INTEGER" />
+    <result column="ta_tea_id" property="taTeaId" jdbcType="INTEGER" />
+    <result column="ta_date" property="taDate" jdbcType="TIMESTAMP" />
+    <result column="ta_status" property="taStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ta_to_id, ta_stu_id, ta_tea_id, ta_date, ta_status
+  </sql>
+
+  <!--选题结果动态查询-->
+  <select id="selectTaskDynamic" parameterType="com.lixiangyan.entity.Task" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from class
+    where 1 = 1
+    <if test="id != null || id != ''" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="taToId != null || taToId != ''" >
+      and ta_to_id = #{taToId,jdbcType=INTEGER}
+    </if>
+    <if test="taStuId != null || taStuId != ''" >
+      and ta_stu_id = #{taStuId,jdbcType=INTEGER}
+    </if>
+    <if test="taTeaId != null || taTeaId != ''" >
+      and ta_tea_id = #{taTeaId,jdbcType=INTEGER}
+    </if>
+    <if test="taDate != null || taDate != ''" >
+      and ta_date like "%"#{taDate,jdbcType=TIMESTAMP}"%"
+    </if>
+    <if test="taStatus != null || taStatus != ''" >
+      and ta_status like "%"#{taStatus,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lixiangyan.entity.Task" >
+    insert into task (id, ta_to_id, ta_stu_id,
+      ta_tea_id, ta_date, ta_status
+      )
+    values (#{id,jdbcType=INTEGER}, #{taToId,jdbcType=INTEGER}, #{taStuId,jdbcType=INTEGER},
+      #{taTeaId,jdbcType=INTEGER}, #{taDate,jdbcType=TIMESTAMP}, #{taStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lixiangyan.entity.Task" >
+    insert into task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taToId != null" >
+        ta_to_id,
+      </if>
+      <if test="taStuId != null" >
+        ta_stu_id,
+      </if>
+      <if test="taTeaId != null" >
+        ta_tea_id,
+      </if>
+      <if test="taDate != null" >
+        ta_date,
+      </if>
+      <if test="taStatus != null" >
+        ta_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="taToId != null" >
+        #{taToId,jdbcType=INTEGER},
+      </if>
+      <if test="taStuId != null" >
+        #{taStuId,jdbcType=INTEGER},
+      </if>
+      <if test="taTeaId != null" >
+        #{taTeaId,jdbcType=INTEGER},
+      </if>
+      <if test="taDate != null" >
+        #{taDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taStatus != null" >
+        #{taStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lixiangyan.entity.Task" >
+    update task
+    <set >
+      <if test="taToId != null" >
+        ta_to_id = #{taToId,jdbcType=INTEGER},
+      </if>
+      <if test="taStuId != null" >
+        ta_stu_id = #{taStuId,jdbcType=INTEGER},
+      </if>
+      <if test="taTeaId != null" >
+        ta_tea_id = #{taTeaId,jdbcType=INTEGER},
+      </if>
+      <if test="taDate != null" >
+        ta_date = #{taDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taStatus != null" >
+        ta_status = #{taStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lixiangyan.entity.Task" >
+    update task
+    set ta_to_id = #{taToId,jdbcType=INTEGER},
+      ta_stu_id = #{taStuId,jdbcType=INTEGER},
+      ta_tea_id = #{taTeaId,jdbcType=INTEGER},
+      ta_date = #{taDate,jdbcType=TIMESTAMP},
+      ta_status = #{taStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

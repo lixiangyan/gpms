@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lixiangyan.dao.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.lixiangyan.entity.Topic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="to_name" property="toName" jdbcType="VARCHAR" />
+    <result column="to_type" property="toType" jdbcType="VARCHAR" />
+    <result column="to_nature" property="toNature" jdbcType="VARCHAR" />
+    <result column="to_remark" property="toRemark" jdbcType="VARCHAR" />
+    <result column="to_source" property="toSource" jdbcType="VARCHAR" />
+    <result column="to_status" property="toStatus" jdbcType="VARCHAR" />
+    <result column="to_intro" property="toIntro" jdbcType="VARCHAR" />
+    <result column="to_condition" property="toCondition" jdbcType="VARCHAR" />
+    <result column="to_tea_id" property="toTeaId" jdbcType="INTEGER" />
+    <result column="to_stu_id" property="toStuId" jdbcType="INTEGER" />
+    <result column="to_date" property="toDate" jdbcType="TIMESTAMP" />
+    <result column="to_state" property="toState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, to_name, to_type, to_nature, to_remark, to_source, to_status, to_intro, to_condition,
+    to_tea_id, to_stu_id, to_date, to_state
+  </sql>
+
+  <!--课题动态查询-->
+  <select id="selectTopicDynamic" parameterType="com.lixiangyan.entity.Topic" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from student
+    where 1 = 1
+    <if test="id != null || id != ''" >
+      and id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="toName != null || toName != ''" >
+      and to_name like "%"#{toName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toType != null || toType != ''" >
+      and to_type like "%"#{toType,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toNature != null || toNature != ''" >
+      and to_nature like "%"#{toNature,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toRemark != null || toRemark != ''" >
+      and to_remark like "%"#{toRemark,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toSource != null || toSource != ''" >
+      and to_source like "%"#{toSource,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toStatus != null || toStatus != ''" >
+      and to_status like "%"#{toStatus,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toIntro != null || toIntro != ''" >
+      and to_intro like "%"#{toIntro,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toCondition != null || toCondition != ''" >
+      and to_condition like "%"#{toCondition,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="toTeaId != null || toTeaId != ''" >
+      and to_tea_id = #{toTeaId,jdbcType=INTEGER}
+    </if>
+    <if test="toStuId != null || toStuId != ''" >
+      and to_stu_id = #{toStuId,jdbcType=INTEGER}
+    </if>
+    <if test="toDate != null || toDate != ''" >
+      and to_date like "%"#{toDate,jdbcType=TIMESTAMP}"%"
+    </if>
+    <if test="toState != null || toState != ''" >
+      and to_state like "%"#{toState,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lixiangyan.entity.Topic" >
+    insert into topic (id, to_name, to_type,
+      to_nature, to_remark, to_source,
+      to_status, to_intro, to_condition,
+      to_tea_id, to_stu_id, to_date,
+      to_state)
+    values (#{id,jdbcType=INTEGER}, #{toName,jdbcType=VARCHAR}, #{toType,jdbcType=VARCHAR},
+      #{toNature,jdbcType=VARCHAR}, #{toRemark,jdbcType=VARCHAR}, #{toSource,jdbcType=VARCHAR},
+      #{toStatus,jdbcType=VARCHAR}, #{toIntro,jdbcType=VARCHAR}, #{toCondition,jdbcType=VARCHAR},
+      #{toTeaId,jdbcType=INTEGER}, #{toStuId,jdbcType=INTEGER}, #{toDate,jdbcType=TIMESTAMP},
+      #{toState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lixiangyan.entity.Topic" >
+    insert into topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="toName != null" >
+        to_name,
+      </if>
+      <if test="toType != null" >
+        to_type,
+      </if>
+      <if test="toNature != null" >
+        to_nature,
+      </if>
+      <if test="toRemark != null" >
+        to_remark,
+      </if>
+      <if test="toSource != null" >
+        to_source,
+      </if>
+      <if test="toStatus != null" >
+        to_status,
+      </if>
+      <if test="toIntro != null" >
+        to_intro,
+      </if>
+      <if test="toCondition != null" >
+        to_condition,
+      </if>
+      <if test="toTeaId != null" >
+        to_tea_id,
+      </if>
+      <if test="toStuId != null" >
+        to_stu_id,
+      </if>
+      <if test="toDate != null" >
+        to_date,
+      </if>
+      <if test="toState != null" >
+        to_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="toName != null" >
+        #{toName,jdbcType=VARCHAR},
+      </if>
+      <if test="toType != null" >
+        #{toType,jdbcType=VARCHAR},
+      </if>
+      <if test="toNature != null" >
+        #{toNature,jdbcType=VARCHAR},
+      </if>
+      <if test="toRemark != null" >
+        #{toRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="toSource != null" >
+        #{toSource,jdbcType=VARCHAR},
+      </if>
+      <if test="toStatus != null" >
+        #{toStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="toIntro != null" >
+        #{toIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="toCondition != null" >
+        #{toCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="toTeaId != null" >
+        #{toTeaId,jdbcType=INTEGER},
+      </if>
+      <if test="toStuId != null" >
+        #{toStuId,jdbcType=INTEGER},
+      </if>
+      <if test="toDate != null" >
+        #{toDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="toState != null" >
+        #{toState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lixiangyan.entity.Topic" >
+    update topic
+    <set >
+      <if test="toName != null" >
+        to_name = #{toName,jdbcType=VARCHAR},
+      </if>
+      <if test="toType != null" >
+        to_type = #{toType,jdbcType=VARCHAR},
+      </if>
+      <if test="toNature != null" >
+        to_nature = #{toNature,jdbcType=VARCHAR},
+      </if>
+      <if test="toRemark != null" >
+        to_remark = #{toRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="toSource != null" >
+        to_source = #{toSource,jdbcType=VARCHAR},
+      </if>
+      <if test="toStatus != null" >
+        to_status = #{toStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="toIntro != null" >
+        to_intro = #{toIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="toCondition != null" >
+        to_condition = #{toCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="toTeaId != null" >
+        to_tea_id = #{toTeaId,jdbcType=INTEGER},
+      </if>
+      <if test="toStuId != null" >
+        to_stu_id = #{toStuId,jdbcType=INTEGER},
+      </if>
+      <if test="toDate != null" >
+        to_date = #{toDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="toState != null" >
+        to_state = #{toState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lixiangyan.entity.Topic" >
+    update topic
+    set to_name = #{toName,jdbcType=VARCHAR},
+      to_type = #{toType,jdbcType=VARCHAR},
+      to_nature = #{toNature,jdbcType=VARCHAR},
+      to_remark = #{toRemark,jdbcType=VARCHAR},
+      to_source = #{toSource,jdbcType=VARCHAR},
+      to_status = #{toStatus,jdbcType=VARCHAR},
+      to_intro = #{toIntro,jdbcType=VARCHAR},
+      to_condition = #{toCondition,jdbcType=VARCHAR},
+      to_tea_id = #{toTeaId,jdbcType=INTEGER},
+      to_stu_id = #{toStuId,jdbcType=INTEGER},
+      to_date = #{toDate,jdbcType=TIMESTAMP},
+      to_state = #{toState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
