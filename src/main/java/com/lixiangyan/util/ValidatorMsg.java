@@ -40,18 +40,18 @@ public class ValidatorMsg {
     /**
      * 查询结果集验证
      * @param list 返回值
-     * @param message001 成功语句
+     * @param message01 成功语句
      * @param message02 失败语句
      * @return
      */
-    public Rejson selectVerification(List list,String message001,String message02){
+    public Rejson selectVerification(List list,String message01,String message02){
         rejson = new Rejson();
 
         if (list.size() != 0 && list != null){
             rejson.setList(list);
             rejson.setBool(true);
             rejson.setStatus(200);
-            rejson.setMessage(message001);
+            rejson.setMessage(message01);
         }else {
             rejson.setList(null);
             rejson.setBool(false);
@@ -64,17 +64,17 @@ public class ValidatorMsg {
     /**
      * 增删改结果集验证
      * @param integer
-     * @param message001
+     * @param message01
      * @param message02
      * @return
      */
-    public Rejson cudVerification(Integer integer,String message001,String message02){
+    public Rejson cudVerification(Integer integer,String message01,String message02){
         rejson = new Rejson();
         if (integer != 0){
             rejson.setList(null);
             rejson.setBool(true);
             rejson.setStatus(200);
-            rejson.setMessage(message001);
+            rejson.setMessage(message01);
         }else {
             rejson.setList(null);
             rejson.setBool(false);
